@@ -1,0 +1,27 @@
+What is Spring Boot?
+
+Spring Boot is a framework for packaging the spring application with sensible defaults. What does this mean?. You are developing a web application using Spring MVC, Spring Data, Hibernate and Tomcat. How do you package and deploy this application to your web server. As of now, we have to manually write the configurations, XML files, etc. for deploying to web server.
+
+Spring Boot does that for you with Zero XML configuration in your project. Believe me, you don't need deployment descriptor, web server, etc. Spring Boot is magical framework that bundles all the dependencies for you. Finally your web application will be a standalone JAR file with embeded servers.
+
+If you are still confused how this works, please read about microservice framework development using spring boot.
+
+
+
+
+
+
+
+Spring IOC container- inversion of control.
+A framework is essentially a skeleton, a structure around which the fleshing out of your application occurs.
+framework built around design pattern and structural components-which the developer wont modify.
+Frameworks tend to be built around a design pattern and consist of frozen spots – structural components which are unmodified by the developer -- and hot spots, the pieces that an application developer contributes.
+
+In Spring, the hot spots are developer-contributed POJOs which are configured to run within the framework.
+
+it can enforce good coding practices that make it easier for you and your fellow developers to cooperate in writing well-factored, reusable, readable, and manageable application components.
+ IoC is much larger than dependency injection.
+The Spring IoC container enforces dependency injection in its various forms.
+and employes a number of de pattern to acheive DI.
+
+Spring IOC employes various design pattern to enforces the Dependency Injection.

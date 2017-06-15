@@ -1,0 +1,130 @@
+questions:
+1..difference between response.sendredirect and request.getrequestdispatcher.
+2..
+
+
+
+
+
+
+
+-----------------------------------------------
+Servlets can maintain state in session variables across many server transactions by using HTTP cookies, or URL rewriting.
+to deploy and run a servlet we need a web container.
+ A web container (also known as a servlet container) is essentially the component of a web server that interacts with the servlets.
+ 
+ The web container is responsible for managing the lifecycle of servlets, mapping a URL to a particular servlet and ensuring that the URL requester has the correct access rights.
+ 
+ A Servlet is an object that receives a request and generates a response based on that request. 
+ 
+ 
+ for servlets, each request is handled by a separate Java thread within the web server process, thereby avoiding the overhead associated with forking processes within the HTTP daemon.
+ 
+ With servlets, there is only one copy that persists across requests and is shared between threads.
+ Only a single instance answers all requests concurrently. This reduces memory usage and eases the management of persistent data.
+ A servlet can be run by a servlet container in a restrictive environment, called a sandbox. This is similar to an applet that runs in the sandbox of the web browser. This enables restricted use of potentially harmful servlets.
+ 
+ Three methods are central to the life cycle of a servlet. These are init(), service(), and destroy(). They are implemented by every servlet and are invoked at specific times by the server.
+ 
+ During initialization stage of the servlet life cycle, the web container initializes the servlet instance by calling the init() method, passing an object implementing the javax.servlet.ServletConfig interface.
+ 
+ After initialization, the servlet instance can service client requests. Each request is serviced in its own separate thread. The web container calls the service() method of the servlet for every request. The service() method determines the kind of request being made and dispatches it to an appropriate method to handle the request. The developer of the servlet must provide an implementation for these methods. If a request is made for a method that is not implemented by the servlet, the method of the parent class is called, typically resulting in an error being returned to the requester.
+ 
+ Finally, the web container calls the destroy() method that takes the servlet out of service.  	
+ 
+ The following is a typical user scenario of these methods.
+
+1#Assume that a user requests to visit a URL.
+The browser then generates an HTTP request for this URL.
+This request is then sent to the appropriate server.
+2#The HTTP request is received by the web server and forwarded to the servlet container.
+The container maps this request to a particular servlet.
+The servlet is dynamically retrieved and loaded into the address space of the container.
+3#The container invokes the init() method of the servlet.
+This method is invoked only when the servlet is first loaded into memory.
+It is possible to pass initialization parameters to the servlet so that it may configure itself.
+4#The container invokes the service() method of the servlet.
+This method is called to process the HTTP request. 
+The servlet may read data that has been provided in the HTTP request.
+The servlet may also formulate an HTTP response for the client.
+5#The servlet remains in the container's address space and is available to process any other HTTP requests received from clients.
+The service() method is called for each HTTP request.
+6#The container may, at some point, decide to unload the servlet from its memory.
+The algorithms by which this decision is made are specific to each container.
+7#The container calls the servlet's destroy() method to relinquish any resources such as file handles that are allocated for the servlet; important data may be saved to a persistent store.
+8#The memory allocated for the servlet and its objects can then be garbage collected.
+
+Servlet Container States
+
+The servlet container is the part of web server which can be run in a separate process. We can classify the servlet container states in three types:
+
+Standalone: It is typical Java-based servers in which the servlet container and the web servers are the integral part of a single program. For example:- Tomcat running by itself
+In-process: It is separated from the web server, because a different program is runs within the address space of the main server as a plug-in. For example:- Tomcat running inside the JBoss.
+Out-of-process: The web server and servlet container are different programs which are run in a different process. For performing the communications between them, web server uses the plug-in provided by the servlet container.
+
+
+The Servlet Container performs many operations that are given below:
+
+Life Cycle Management
+Multithreaded support
+Object Pooling
+Security etc.
+
+---------------------
+http notes:
+
+
+HTTP is media independent: It refers to any type of media content can be sent by HTTP as long as both the server and the client can handle the data content.
+HTTP is connectionless: It is a connectionless approach in which HTTP client i.e., a browser initiates the HTTP request and after the request is sends the client disconnects from server and waits for the response.
+HTTP is stateless: The client and server are aware of each other during a current request only. Afterwards, both of them forget each other. Due to the stateless nature of protocol, neither the client nor the server can retain the information about different request across the web pages.
+
+
+
+
+
+
+-----------------------
+These are the principles that you should keep in mind to be able to build a Web application using   Servlet + JSP  satisfying criteria: code is simple, easy to understand and easy to maintain.
+The principles:
+Never allow users to directly access to your JSP page.
+JSP is only considered as the place to display interface.
+Servlet acts as the controller of the application flows and  program logical processing.
+Open the JDBC connection and transaction management in Filter (Optional).
+
+
+
+
+------------------
+request object,
+session object,
+context object
+
+session object can used across servlet..
+global object across servlet and it is available only to one user.
+
+context object for all user and all servlet..but only one object is available..
+
+
+servlets -- threads, no objects
+whenever a access is made or typing in url, there will not be new object created as for as the servlet is concerned..tomcat wil not create new servlet obj.every request is treated as separate thread.
+bcoz scalable.. doesnt hav to create object for every user. 
+
+------------
+servlet inheritance
+
+
+generic servlet (as all the methods like init(), init(servletconfig), service())
+    |
+	|
+	|
+HTTPservlet(service() method is overwritten here..)
+	|
+	|
+	|
+Myservlet(contais doGet() and doPost())
+
+
+--------------
+Java Servlet Graphing Solutions - These solutions are powerful server side functionality. Although probably not for the beginner they are very beneficial to the 'web application' developer.
+
+--------------

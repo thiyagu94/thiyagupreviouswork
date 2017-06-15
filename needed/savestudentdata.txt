@@ -1,0 +1,24 @@
+@Override
+	public String saveStudentData(Student student) {    
+		 
+		Cluster cluster = null;
+		Session session = null;
+		String result = null;
+		try{
+		session=getCassandraConnection();
+		PreparedStatement ps = session.prepare(
+		"Insert into Student(id,name,age,college) values(?,?,?,?)");
+		BoundStatement bound = ps.bind().setString(0,student.getId()).setString(0,student.getName()).setString(0,student.getAge()).setString(0,student.getCollege());
+		session.execute(bound);
+		result="success";
+		}
+		catch(Exception ex){
+		reesult="failure";
+		 
+		}
+		finally{
+		closeCassandraConnection(cluster, session);
+		}
+		return result;
+		 
+		}

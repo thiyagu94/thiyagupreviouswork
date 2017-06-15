@@ -1,0 +1,154 @@
+CREATE SEQUENCE vendor_seq
+ START WITH     10000
+ INCREMENT BY   1
+ NOCACHE
+ NOCYCLE;
+
+
+
+CREATE SEQUENCE transaction_seq
+ START WITH     10000
+ INCREMENT BY   1
+ NOCACHE
+ NOCYCLE;
+
+
+
+
+CREATE SEQUENCE product_seq
+ START WITH     10000
+ INCREMENT BY   1
+ NOCACHE
+ NOCYCLE;
+
+
+
+
+
+
+
+create or replace trigger customerlog
+after insert on customerlogin for each row
+
+declare
+   customer_id integer;
+begin
+
+customer_id := customer_seq.nextval;
+	insert into customer values(to_char(customer_id));
+ 
+end;
+/
+
+
+
+create or replace trigger vendorregistration
+after insert on vendorsignin for each row
+declare
+empty varchar2(1):='0';
+num integer:=0;
+   
+begin
+
+	insert into vendorregistration values(:new.vendorid,:new.username,num,empty,empty,empty,empty,empty,num,empty,empty);
+ 
+end;
+/
+
+
+
+create or replace trigger customerregistration
+after insert on customersignin for each row
+declare
+empty varchar2(1):='0';
+num integer:=0;
+   
+begin
+
+	insert into customerregistration values(:new.customerid,:new.username,empty,num,empty,empty,empty,empty,empty);
+ 
+end;
+/
+
+
+
+
+create or replace procedure generatevendorId(id out integer) is
+
+begin
+
+select vendor_seq.nextval
+  into id
+  from dual;
+
+end generatevendorId;
+
+
+
+create or replace procedure productId(id out integer) is
+
+begin
+
+select product_seq.nextval
+  into id
+  from dual;
+
+end productId;
+
+
+
+
+create or replace procedure generateTransactionId(id out integer) is
+
+begin
+
+select transaction_seq.nextval
+  into id
+  from dual;
+
+end generateTransactionId;
+
+
+
+
+
+
+
+
+variable s varchar;
+exec generatevendorId(:s);
+print s
+/
+
+
+CallableStatement cstmt = conn.prepareCall("{? = CALL balance(?)}");
+cstmt.registerOutParameter(1, Types.FLOAT);
+cstmt.setInt(2, acctNo);
+cstmt.executeUpdate();
+float acctBal = cstmt.getFloat(1);
+
+
+
+
+
+ create or replace type product as varray(20) of varchar2(20);
+
+
+create table transaction (transactionid varchar2(6),customerId varchar2(6),productname product,vendorId vendor,price price,status varchar2(10));
+
+
+
+create table vendorregistration(vendorid varchar2(6),vendorname varchar2(30),companyregno integer,type varchar2(20),address varchar2(150),country varchar2(50),state varchar2(50),email varchar2(50),contactno integer,website varchar2(50),yearofest varchar2(10));
+
+
+create table customerregistration(customerid varchar2(6),customername varchar2(30),address varchar2(150),contactno integer,country varchar2(50),state varchar2(50),email varchar2(50),identificationDocument varchar2(30),documentDetailNumber varchar2(30));
+
+
+
+
+create table vendorsignin(vendorid varchar2(6),username varchar2(30),password varchar2(10));
+
+create table customersignin(customerid varchar2(6),username varchar2(30),password varchar2(10));
+
+
+create table productlist (productid varchar2(6),productname varchar2(50),vendorid varchar2(6),price number);

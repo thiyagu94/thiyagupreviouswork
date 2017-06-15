@@ -1,0 +1,16 @@
+java learnings
+
+The Java String class provides the .compareTo () method in order to lexicographically compare Strings. It is used like this "apple".compareTo ("banana").
+
+The return of this method is an int which can be interpreted as follows:
+
+returns < 0 then the String calling the method is lexicographically first (comes first in a dictionary)
+returns == 0 then the two strings are lexicographically equivalent
+returns > 0 then the parameter passed to the compareTo method is lexicographically first.
+More specifically, the method provides the first non-zero difference in ASCII values.
+
+Thus "computer".compareTo ("comparison") will return a value of (int) 'u' - (int) 'a' (21). Since this is a positive result, the parameter ("comparison") is lexicographically first.
+
+There is also a variant .compareToIgnoreCase () which will return 0 for "a".compareToIgnoreCase ("A"); for example.
+
+------------
